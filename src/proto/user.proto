@@ -1,0 +1,213 @@
+syntax = "proto3";
+
+package user;
+
+// Define the gRPC service for Users
+service UsersService {
+  rpc SendVerificationCodeToRegister (SendVerificationCodeToRegisterRequest) returns (SendVerificationCodeToRegisterResopnse);
+  rpc VerifyVerificationCodeToRegister (VerifyVerificationCodeToRegisterRequest) returns (VerifyVerificationCodeToRegisterResopnse);
+  rpc SendVerificationCodeToBindPrivateKey (SendVerificationCodeToBindPrivateKeyRequest) returns (SendVerificationCodeToBindPrivateKeyResponse);
+  rpc VerifyVerificationCodeToBindPrivateKey (VerifyVerificationCodeToBindPrivateKeyRequest) returns (VerifyVerificationCodeToBindPrivateKeyResponse);
+  rpc UserLogin (UserLoginRequest) returns (UserLoginResponse);
+  rpc GetUserInfo (GetUserInfoRquest) returns (GetUserInfoResponse);
+}
+
+message SendVerificationCodeToRegisterRequest {
+  string email = 1;
+}
+
+message SendVerificationCodeToRegisterResopnse {
+  int64 status = 1;
+  string message = 2; 
+}
+
+message SendVerificationCodeToBindPrivateKeyRequest {
+  string email = 1;
+}
+
+message SendVerificationCodeToBindPrivateKeyResponse {
+  int64 status = 1;
+  string message = 2; 
+}
+
+message RegisterUser{
+    string userId = 1;
+    string username = 2;
+    string address = 3;
+    string email = 4;
+    string profile = 5;
+    string phoneNumber = 6;
+    string privateKey = 7;
+}
+
+message VerifyVerificationCodeToRegisterRequest {
+  RegisterUser user = 1;
+  string verificationCode = 2;
+}
+
+message VerifyVerificationCodeToRegisterResopnse {
+  int64 status = 1;
+  string message = 2; 
+}
+
+message VerifyVerificationCodeToBindPrivateKeyRequest {
+  RegisterUser user = 1;
+  string verificationCode = 2;
+}
+
+message VerifyVerificationCodeToBindPrivateKeyResponse {
+  int64 status = 1;
+  string message = 2; 
+}
+
+message UserLoginRequest {
+  string address = 1;
+  string message = 2;
+  string signature = 3;
+}
+
+message UserLoginResponse {
+  int64 status = 1;
+  string message = 2;
+}
+
+message UserInfo{
+  string userId = 1;
+  string username = 2;
+  string address = 3;
+  string email = 4;    
+  string profile = 5;
+  string phoneNumber = 6;
+  string privateKey = 7;
+}
+
+message GetUserInfoRquest {
+  string userId = 1;
+}
+
+message GetUserInfoResponse {
+  int64 status = 1;
+  string message = 2;
+  UserInfo data = 3;
+}
+
+
+
+
+// Message definitions for User entity
+message CreateUserRequest {
+  string username = 1;
+  string address = 2;
+  string email = 3;
+  string profile = 4;
+  string phone_number = 5;
+}
+
+message CreateUserResponse {
+  string userId = 1;
+}
+
+message UserIdRequest {
+  string userId = 1;
+}
+
+message UpdateUserRequest {
+  int64 userId = 1;
+  CreateUserRequest update_data = 2;
+}
+
+message UserResponse {
+  string userId = 1;
+  string username = 2;
+  string address = 3;
+  string email = 4;
+  string profile = 5;
+  string phone_number = 6;
+}
+
+message UsersListResponse {
+  repeated UserResponse users = 1;
+}
+
+// Message definitions for CommentUser entity
+message CreateCommentUserRequest {
+  int64 comment_id = 1;
+  int64 userId = 2;
+}
+
+message CommentUserIdRequest {
+  int64 comment_userId = 1;
+}
+
+message CommentUserResponse {
+  int64 comment_userId = 1;
+  int64 comment_id = 2;
+  int64 userId = 3;
+}
+
+message CommentUsersListResponse {
+  repeated CommentUserResponse comment_users = 1;
+}
+
+// Message definitions for CommunityUser entity
+message CreateCommunityUserRequest {
+  int64 community_id = 1;
+  int64 userId = 2;
+}
+
+message CommunityUserIdRequest {
+  int64 community_userId = 1;
+}
+
+message CommunityUserResponse {
+  int64 community_userId = 1;
+  int64 community_id = 2;
+  int64 userId = 3;
+}
+
+message CommunityUsersListResponse {
+  repeated CommunityUserResponse community_users = 1;
+}
+
+// Message definitions for PointUser entity
+message CreatePointUserRequest {
+  int64 point_id = 1;
+  int64 userId = 2;
+}
+
+message PointUserIdRequest {
+  int64 point_userId = 1;
+}
+
+message PointUserResponse {
+  int64 point_userId = 1;
+  int64 point_id = 2;
+  int64 userId = 3;
+}
+
+message PointUsersListResponse {
+  repeated PointUserResponse point_users = 1;
+}
+
+// Message definitions for PostUser entity
+message CreatePostUserRequest {
+  int64 post_id = 1;
+  int64 userId = 2;
+}
+
+message PostUserIdRequest {
+  int64 post_userId = 1;
+}
+
+message PostUserResponse {
+  int64 post_userId = 1;
+  int64 post_id = 2;
+  int64 userId = 3;
+}
+
+message PostUsersListResponse {
+  repeated PostUserResponse post_users = 1;
+}
+
+// Empty message definition for no-return cases
+message Empty {}

@@ -1,0 +1,84 @@
+syntax = "proto3";
+
+package community;
+
+// Community service definition
+service CommunityService {
+    rpc CreateCommunity(CreateCommunityRequest) returns (Responses);
+    rpc FindAllCommunities(Empty) returns (FindAllCommunitiesResponses);
+    rpc FindOneCommunity(FindOneCommunityRequest) returns (FindOneCommunityResponses);
+    rpc CreatePoint(CreatePointsRequest) returns (Responses);
+    rpc MintPoint(MintPointRequest) returns (Responses);
+}
+
+// Empty message definition
+message Empty{
+
+}
+
+
+// Request message for creating a community
+message CreateCommunityRequest {
+    Community community = 1;
+    string userId = 2;
+}
+
+// Community message definition
+message Community {
+    string communityId = 1;
+    string communityName = 2;
+    string communityDescription = 3;
+    string communityCreator = 4;
+    string communityTags = 5;
+    string communityAddress = 6;
+}
+
+// Response message definition
+message Responses {
+    int32 status = 1;
+    string message = 2;
+    bytes data = 3; // Use 'bytes' for dynamic data types
+}
+
+// Response message for finding all communities
+message FindAllCommunitiesResponses {
+    int32 status = 1;
+    string message = 2;
+    repeated Community data = 3; // List of communities
+}
+
+// Request message for finding one community
+message FindOneCommunityRequest {
+    string communityId = 1;
+}
+
+// Response message for finding one community
+message FindOneCommunityResponses {
+    int32 status = 1;
+    string message = 2;
+    Community data = 3; // Single community
+}
+
+// Point message definition
+message Point {
+    string pointId = 1;
+    string pointName = 2;
+    string pointSymbol = 3;
+    int32 initialSupply = 4;
+    string pointAddress = 5;
+}
+
+// Request message for creating a point
+message CreatePointsRequest {
+    Point point = 1;
+    string communityId = 2;
+    string userId = 3;
+}
+
+
+message MintPointRequest {
+    string userId = 1;
+    string pointId = 2;
+    string toAddress = 3;
+    int32 amount = 4;
+}
